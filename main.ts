@@ -111,10 +111,11 @@ tiles.setTilemap(tiles.createTilemap(hex`100020000000010303030303030303030303010
 
 // Create hero sprite
 let hero = sprites.create(leftFacingImg, SpriteKind.Player)
-controller.moveSprite(hero)
+controller.moveSprite(hero, 100, 0)
 
 tiles.placeOnTile(hero, tiles.getTileLocation(4, 30))
 scene.cameraFollowSprite(hero)
+hero.ay = 300
 
 // Set proper left/right Image
 controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
@@ -122,4 +123,29 @@ controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
 })
 controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
     hero.setImage(rightFacingImg)
+})
+
+// Add jump control
+controller.player1.onButtonEvent(ControllerButton.A, ControllerButtonEvent.Pressed, function() {
+   if(hero.isHittingTile(CollisionDirection.Bottom) || hero.isHittingTile(CollisionDirection.Left) || hero.isHittingTile(CollisionDirection.Right)) {
+       hero.vy = -180
+   }
+    
+})
+
+// Pull out sword
+game.onUpdateInterval(100, function() {
+    if (hero.isHittingTile(CollisionDirection.Right) && hero.vy > 0){
+        hero.ay = 0
+        hero.vy = 15
+        hero.setImage(rightSwordOutImg)
+    }
+    else if(hero.isHittingTile(CollisionDirection.Left) && hero.vy > 0){
+        hero.ay = 0
+        hero.vy = 15 
+        hero.setImage(leftSwordOutImg)
+    }
+    else{
+        hero.ay = 300
+    }
 })
