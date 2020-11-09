@@ -170,9 +170,6 @@ game.onUpdateInterval(100, function() {
     }
 })
 
-
-    
-})
 // Add Lava
 game.onUpdateInterval(2000, function() {
     for (let i = 0; i < column; i++){
