@@ -172,14 +172,21 @@ game.onUpdateInterval(100, function() {
 
 // Add Lava
 game.onUpdateInterval(2000, function() {
-    for (let i = 0; i < column; i++){
-        tiles.setTileAt(tiles.getTileLocation(i, row), LavaImg)
+    if (game.runtime() > 3000){
+        if (row == 32){
+            game.splash("BEWARE, LAVA IS COMING!")
+        }
+        else{
+            for (let i = 0; i < column; i++){
+            tiles.setTileAt(tiles.getTileLocation(i, row), LavaImg)
+            }
+        }
+        row--
     }
-    row--
 })
 
 // Win Condition
-scene.onOverlapTile(SpriteKind.Player, img` `, function(sprite: Sprite, location: tiles.Location) {
+scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.chestClosed, function(sprite: Sprite, location: tiles.Location) {
     game.over(true)
 })
 
