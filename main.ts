@@ -1,12 +1,6 @@
-controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
-    hero.setImage(leftFacingImg)
-})
-controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
-    hero.setImage(rightFacingImg)
-})
-let hero: Sprite = null
-let leftFacingImg: Image = null
-let rightFacingImg: Image = null
+
+
+// INITALIZE
 let rightSwordOutImg = img`
     . . . . . . . f f . . . . . . . 
     . . . . f f f f 2 f f . . . . . 
@@ -43,7 +37,7 @@ let leftSwordOutImg = img`
     . . c . . . f f f f f f f f . . 
     . . . . . . . f f . . f f f . . 
     `
-rightFacingImg = img`
+let rightFacingImg = img`
     . . . . . . . . . . . . . . . . 
     . . . . . f f f f f f . . . . . 
     . . . f f e e e e f 2 f . . . . 
@@ -61,7 +55,7 @@ rightFacingImg = img`
     . . . f f f f f f f f f f . . . 
     . . . . f f . . . f f f . . . . 
     `
-leftFacingImg = img`
+let leftFacingImg = img`
     . . . . . . . . . . . . . . . . 
     . . . . . f f f f f f . . . . . 
     . . . . f 2 f e e e e f f . . . 
@@ -78,9 +72,8 @@ leftFacingImg = img`
     . . . f f 5 5 f e e f f f . . . 
     . . . f f f f f f f f f f . . . 
     . . . . f f f . . . f f . . . . 
+ 
     `
-hero = sprites.create(leftFacingImg, SpriteKind.Player)
-controller.moveSprite(hero)
 tiles.setTilemap(tiles.createTilemap(hex`100020000000010303030303030303030303010000000103030303030303030303030100000001020303030303030303030301000000010101010101010303030303010000000103030303030303030101030100000001030303030303030303030301000000010303030303030101030303010000000103010101030303030303030100000001030303030303030303030301000000010303030303030101010101010000000103030303030301030303030100000001030303030101010303030301000000010303030303030303030303010000000103030303030303030101030100000001010101030303030303030301000000010303030303030101030303010000000103030303030303030303030100000001030303030303030303030301000000010101010103030303030303010000000103030303030303030303030100000001030303030303010101030301000000010303030303030303030303010000000103030303030303030303030100000001010101030303030303030301000000010303010103030303030303010000000103030303030303030303030100000001030303030303030101010101000000010303030303030301030303010000000103030303010101010303030100000001030303030303030303030301000000010303030303030303030303010000000101010103030303030303030100`, img`
     ..2...........2.
     ..2...........2.
@@ -115,5 +108,18 @@ tiles.setTilemap(tiles.createTilemap(hex`100020000000010303030303030303030303010
     ..2...........2.
     ..2222........2.
     `, [myTiles.transparency16,sprites.dungeon.floorLight4,sprites.dungeon.chestClosed,sprites.dungeon.floorDark2], TileScale.Sixteen))
+
+// Create hero sprite
+let hero = sprites.create(leftFacingImg, SpriteKind.Player)
+controller.moveSprite(hero)
+
 tiles.placeOnTile(hero, tiles.getTileLocation(4, 30))
 scene.cameraFollowSprite(hero)
+
+// Set proper left/right Image
+controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
+    hero.setImage(leftFacingImg)
+})
+controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
+    hero.setImage(rightFacingImg)
+})
